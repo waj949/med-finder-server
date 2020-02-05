@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const searchable = require("mongoose-regex-search");
 const validator = require("validator");
 
 const Doctor = new mongoose.Schema(
@@ -35,6 +35,8 @@ const Doctor = new mongoose.Schema(
     
     lng :Number,
     
+    address: String,
+    
     openingHour: String,
 
     closingHour: String,
@@ -47,4 +49,5 @@ const Doctor = new mongoose.Schema(
   { timestamps: true }
 );
 
+Medicine.plugin(searchable);
 module.exports = mongoose.model("Doctor", Doctor);

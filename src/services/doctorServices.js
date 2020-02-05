@@ -12,6 +12,7 @@ module.exports  = class DoctorServices {
         image: doctor.image,
         lat: doctor.lat,
         lng: doctor.lng,
+        adress:doctor.address,
         openingHour: doctor.openingHour,
         closingHour: doctor.closingHour,
         password: doctor.password
