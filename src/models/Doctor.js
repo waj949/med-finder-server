@@ -42,6 +42,9 @@ const Doctor = new mongoose.Schema(
     closingHour: String,
 
     password: { type: String, required: true },
+    
+    phoneNumber: String,
+    
     patients: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Patient" } // should we have this
     ]
@@ -49,5 +52,5 @@ const Doctor = new mongoose.Schema(
   { timestamps: true }
 );
 
-Medicine.plugin(searchable);
+Doctor.plugin(searchable);
 module.exports = mongoose.model("Doctor", Doctor);

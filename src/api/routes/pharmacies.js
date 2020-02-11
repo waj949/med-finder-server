@@ -17,7 +17,7 @@ const pharmacyRoute = app => {
       .createPharmacy(pharmacyInput)
       .then(data => console.log(data, "created pharmacy"))
       .catch(err => console.log(err));
-    return res.status(200);
+    return res.status(200).end();
   });
 
   route.get("/locateAllPharmacies", async (req, res, next) => {

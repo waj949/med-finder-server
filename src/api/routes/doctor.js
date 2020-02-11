@@ -25,7 +25,7 @@ const doctorRoute = app => {
       .createDoctor(doctorInput)
       .then(data => console.log(data, "created doctor"))
       .catch(err => console.log(err));
-    return res.status(200);
+    return res.status(200).end();
   });
 };
 

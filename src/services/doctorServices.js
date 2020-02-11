@@ -12,10 +12,11 @@ module.exports  = class DoctorServices {
         image: doctor.image,
         lat: doctor.lat,
         lng: doctor.lng,
-        adress:doctor.address,
+        address:doctor.address,
         openingHour: doctor.openingHour,
         closingHour: doctor.closingHour,
-        password: doctor.password
+        password: doctor.password,
+        phoneNumber: doctor.phoneNumber
       });
 
       let savedDoctor = await newDoctor.save(); //when fail its goes to catch
