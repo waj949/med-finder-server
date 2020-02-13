@@ -33,7 +33,7 @@ module.exports = class PharmacyServices {
         $near: {
           $geometry: {
             type: "Point",
-            coordinates: [userCoordinates.lng, userCoordinates.lat]
+            coordinates: userCoordinates
           },
           $maxDistance: 100000 // in meter
         }

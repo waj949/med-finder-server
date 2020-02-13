@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const middlewares = require("../middlewares");
-const bodyParser = require("body-parser");
 const MedicineServices = require("../../services/medicineServices");
 
 const route = Router();
@@ -28,28 +27,27 @@ const medicineRoute = app => {
 
   route.post("/searchForPharmacyLocation", async (req, res) => {
     let input = { ...req.body };
-    MedicineServicesInstance.getMedsLocations(input.query)
-      .then(data => {
-        var result = [];
-        data.forEach(med => {
-          med.pharmacyId.forEach(pharmacy => {
-            result.push({
-              lat: pharmacy.lat,
-              lng: pharmacy.lng,
-              title: pharmacy.name
-              // lat: pharmacy.lat,
-              // lng: pharmacy.lng,
-              // label: pharmacy.name[0].toUpperCase(),
-              // draggable: false,
-              // title: "Pharmacy " + pharmacy.name,
-              // www: `https://www.Pharmacy-${pharmacy.name.slice(0, 5)}.com/`
-            });
-          });
-        });
-        res.json(result);
-      })
-
-      .catch(err => console.log(err));
+    return res.send(
+      await MedicineServicesInstance.getMedsLocations(input.query)
+    );
+    // var result = [];
+    // data.forEach(med => {
+    //   med.pharmacyId.forEach(pharmacy => {
+    //     result.push({
+    //       lat: pharmacy.lat,
+    //       lng: pharmacy.lng,
+    //       title: pharmacy.name
+    //       // lat: pharmacy.lat,
+    //       // lng: pharmacy.lng,
+    //       // label: pharmacy.name[0].toUpperCase(),
+    //       // draggable: false,
+    //       // title: "Pharmacy " + pharmacy.name,
+    //       // www: `https://www.Pharmacy-${pharmacy.name.slice(0, 5)}.com/`
+    //     });
+    //   });
+    // });
+    // res.json(result);
+    // .catch(err => console.log(err))
   });
 
   route.get("/getAllMedicines", (req, res) => {
