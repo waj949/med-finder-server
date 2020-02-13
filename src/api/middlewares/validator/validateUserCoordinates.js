@@ -1,8 +1,9 @@
 module.exports = validateUserCoordinates = (req, res, next) => {
-  const { lat, lng } = JSON.parse(req.headers["user-coordinates"]);
+  const [lng, lat] = JSON.parse(req.params.coordinates);
+
   if ((lng - 180) * (lng + 180) <= 0 && (lat - 90) * (lat + 90) <= 0) {
     console.log("emmmm delicious coordinates 😆");
-    req.headers["user-coordinates"] = { lat, lng };
+    req.params.coordinates = [lng, lat];
     next();
   } else {
     return res
