@@ -28,6 +28,8 @@ module.exports = class PharmacyServices {
     return found;
   }
   searchPharmacies(query, userCoordinates, callback) {
+    const regExpQuery =
+      query === '""' ? new RegExp("", "g") : new RegExp(query, "g");
     Pharmacy.find({
       location: {
         $near: {
@@ -40,7 +42,7 @@ module.exports = class PharmacyServices {
       },
       openingHour: { $lt: new Date().getHours() },
       closingHour: { $gt: new Date().getHours() },
-      name: new RegExp(query, "g")
+      name: regExpQuery
     })
       .then(data => callback(null, data))
       .catch(err => callback(err, null));
