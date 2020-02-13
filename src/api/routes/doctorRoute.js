@@ -17,15 +17,17 @@ const doctorRoute = app => {
     //   .catch(err => console.log(err));
     // return res.status(200);
   });
-  route.post("/search", validator.validateUserCoordinates, (req, res, next) => {
-    const newDoctorServices = new DoctorServices(
-      req.headers["user-coordinates"]
-    );
-    newDoctorServices.searchDoctor(req.body.query, (err, doctors) => {
-      if (err) return res.send({ err });
-      return res.send(doctors);
-    });
-  });
+  route.post(
+    "/search/:query/:coordinates",
+    validator.validateUserCoordinates,
+    (req, res, next) => {
+      const newDoctorServices = new DoctorServices(req.params.coordinates);
+      newDoctorServices.searchDoctor(req.params.query, (err, doctors) => {
+        if (err) return res.send({ err });
+        return res.send(doctors);
+      });
+    }
+  );
 };
 
 module.exports = doctorRoute;
