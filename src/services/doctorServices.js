@@ -1,18 +1,18 @@
 const { DoctorModel } = require("../models");
 
 module.exports = class DoctorServices {
-  constructor({ lng, lat } = {}) {
-    this.lng = lng;
-    this.lat = lat;
+  constructor(userCoordinates) {
+    this.userCoordinates = userCoordinates;
   }
   searchDoctor(query, callback) {
-    const regExpQuery = new RegExp(query, "g");
+    const regExpQuery =
+      query === '""' ? new RegExp("", "g") : new RegExp(query, "g");
     DoctorModel.find({
       location: {
         $near: {
           $geometry: {
             type: "Point",
-            coordinates: [this.lng, this.lat]
+            coordinates: this.userCoordinates
           },
           $maxDistance: 100000 // in meter
         }
