@@ -4,11 +4,11 @@ const validator = require("validator");
 
 const Doctor = new mongoose.Schema(
   {
-    firstname: {
+    firstName: {
       type: String,
       required: [true, "Please enter a first name"]
     },
-    lastname: {
+    lastName: {
       type: String,
       required: [true, "Please enter a last name"]
     },
@@ -25,21 +25,30 @@ const Doctor = new mongoose.Schema(
       unique: true,
       validate: value => {
         if (!validator.isEmail(value))
-          throw new Error({ error: "Invalid Email adress" });
+          throw new Error({ error: "Invalid Email address" });
       }
     },
 
     image: String,
 
-    lat: Number,
-    
-    lng :Number,
-    
-    address: String,
-    
-    openingHour: String,
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        required: true
+      },
+      coordinates: {
+        type: [Number],
+        required: true
+      }
+    },
+    // lat: Number,
 
-    closingHour: String,
+    // lng: Number,
+
+    openingHour: Number,
+
+    closingHour: Number,
 
     password: { type: String, required: true },
     
@@ -47,10 +56,14 @@ const Doctor = new mongoose.Schema(
     
     patients: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Patient" } // should we have this
+    ],
+    pescriptions: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Pescription" } // should we have this
     ]
   },
   { timestamps: true }
 );
 
-Doctor.plugin(searchable);
+Doctor.index({ location: "2dsphere" });
+
 module.exports = mongoose.model("Doctor", Doctor);
